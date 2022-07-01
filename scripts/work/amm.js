@@ -54,7 +54,7 @@ async function main() {
             console.log(
                 step, 'meer'
             )
-            run(step * 1000)
+            runMeer(step * 1000)
         }, nextTime)
     }
 
