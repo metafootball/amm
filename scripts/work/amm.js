@@ -7,7 +7,9 @@ const {
     Attach,
     Accounts,
     address,
-    ForBig
+    ForBig,
+    BigNumber,
+    DecimalHex
 } = require("../deployed")
 
 let accounts;
@@ -16,12 +18,13 @@ let misAmm;
 async function main() {
     accounts = await Accounts()
     console.log(
-        accounts[0].address
+        accounts[0].address,
+        accounts[1].address
     )
-
+        // return
     misAmm = await Attach.SmartAMM(address.Address.MIS_AMM)
-    
-    async function run(nextTime) {
+    meerAmm = await Attach.SmartAMM(address.Address.MEER_AMM)
+    function run(nextTime) {
         setTimeout(async () => {
             const tx = await misAmm.buy()
             console.log(tx.hash)
@@ -36,7 +39,26 @@ async function main() {
         }, nextTime)
     }
     
-    await run(0)
+    run(0)
+
+    
+    function runMeer(nextTime) {
+        setTimeout(async () => {
+            const sender = accounts[1]
+            const tx = await meerAmm.connect(sender).buy()
+            console.log("meerAmm buy ", tx.hash)
+            await tx.wait()
+            const next = await meerAmm.lastBuy()
+            const now = Math.floor(new Date() / 1000)
+            const step = ForBig(next) - now
+            console.log(
+                step, 'meer'
+            )
+            run(step * 1000)
+        }, nextTime)
+    }
+
+    runMeer(0)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
