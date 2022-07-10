@@ -68,7 +68,7 @@ async function main() {
         setTimeout(async () => {
             const sender = accounts[2]
             const tx = await spdAmm.connect(sender).buy()
-            console.log("meerAmm buy ", tx.hash)
+            console.log("runSPD buy ", tx.hash)
             await tx.wait()
             const next = await spdAmm.lastBuy()
             const now = Math.floor(new Date() / 1000)
