@@ -66,7 +66,7 @@ async function main() {
 
     function runSPD(nextTime) {
         setTimeout(async () => {
-            const sender = accounts[1]
+            const sender = accounts[2]
             const tx = await spdAmm.connect(sender).buy()
             console.log("meerAmm buy ", tx.hash)
             await tx.wait()
