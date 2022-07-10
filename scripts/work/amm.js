@@ -15,15 +15,19 @@ const {
 let accounts;
 
 let misAmm;
+let meerAmm;
+let spdAmm;
 async function main() {
     accounts = await Accounts()
     console.log(
         accounts[0].address,
-        accounts[1].address
+        accounts[1].address,
+        accounts[2].address
     )
         // return
     misAmm = await Attach.SmartAMM(address.Address.MIS_AMM)
     meerAmm = await Attach.SmartAMM(address.Address.MEER_AMM)
+    spdAmm = await Attach.SmartAMM(address.Address.SPD_AMM)
     function run(nextTime) {
         setTimeout(async () => {
             const tx = await misAmm.buy()
@@ -33,7 +37,7 @@ async function main() {
             const now = Math.floor(new Date() / 1000)
             const step = ForBig(next) - now
             console.log(
-                step
+                step, "mis"
             )
             run(step * 1000)
         }, nextTime)
@@ -59,6 +63,25 @@ async function main() {
     }
 
     runMeer(0)
+
+    function runSPD(nextTime) {
+        setTimeout(async () => {
+            const sender = accounts[1]
+            const tx = await spdAmm.connect(sender).buy()
+            console.log("meerAmm buy ", tx.hash)
+            await tx.wait()
+            const next = await spdAmm.lastBuy()
+            const now = Math.floor(new Date() / 1000)
+            const step = ForBig(next) - now
+            console.log(
+                step, 'runSPD'
+            )
+            runSPD(step * 1000)
+        }, nextTime)
+    }
+
+    runSPD(0)
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere
