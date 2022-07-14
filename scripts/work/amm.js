@@ -24,63 +24,40 @@ async function main() {
         accounts[1].address,
         accounts[2].address
     )
-        // return
+    // return
     misAmm = await Attach.SmartAMM(address.Address.MIS_AMM)
     meerAmm = await Attach.SmartAMM(address.Address.MEER_AMM)
     spdAmm = await Attach.SmartAMM(address.Address.SPD_AMM)
-    function run(nextTime) {
-        setTimeout(async () => {
-            const tx = await misAmm.buy()
-            console.log(tx.hash)
-            await tx.wait()
-            const next = await misAmm.lastBuy()
-            const now = Math.floor(new Date() / 1000)
-            const step = ForBig(next) - now
-            console.log(
-                step, "mis"
-            )
-            run(step * 1000)
-        }, nextTime)
+
+    async function runAMM(ammContract, signerId) {
+        const signer = accounts[signerId]
+        const now = Math.floor(new Date() / 1000)
+        const nextBuyTime = ForBig(await ammContract.lastBuy()) * 1
+        // 如果 now >= nextBuyTime 就执行买入
+        if ( now >= nextBuyTime ) {
+            try {
+                const tx = await ammContract.connect(signer).buy()
+                console.log(`nextBuyTime: ${nextBuyTime} now: ${now} -> ${signerId} hash ${tx.hash}`)
+                await tx.wait()
+            } catch {
+                console.log(`nextBuyTime: ${nextBuyTime} now: ${now} -> ${signerId} error`)
+            }
+        }
+        // 执行报错后 重新计算下一次 执行时间
+        // nowAfter < nextBuyTimeAfter 则 setTimeout 会立即执行
+        const nextBuyTimeAfter = ForBig(await ammContract.lastBuy()) * 1
+        const nowAfter = Math.floor(new Date() / 1000)
+        setTimeout(() => {
+            runAMM(ammContract, signerId)
+        }, (nextBuyTimeAfter - nowAfter)*1000)
     }
     
-    run(0)
-
     
-    function runMeer(nextTime) {
-        setTimeout(async () => {
-            const sender = accounts[1]
-            const tx = await meerAmm.connect(sender).buy()
-            console.log("meerAmm buy ", tx.hash)
-            await tx.wait()
-            const next = await meerAmm.lastBuy()
-            const now = Math.floor(new Date() / 1000)
-            const step = ForBig(next) - now
-            console.log(
-                step, 'meer'
-            )
-            runMeer(step * 1000)
-        }, nextTime)
-    }
+    runAMM(misAmm,0)
+    // runAMM(meerAmm,1)
+    runAMM(spdAmm,2)
 
-    runMeer(0)
-
-    function runSPD(nextTime) {
-        setTimeout(async () => {
-            const sender = accounts[2]
-            const tx = await spdAmm.connect(sender).buy()
-            console.log("runSPD buy ", tx.hash)
-            await tx.wait()
-            const next = await spdAmm.lastBuy()
-            const now = Math.floor(new Date() / 1000)
-            const step = ForBig(next) - now
-            console.log(
-                step, 'runSPD'
-            )
-            runSPD(step * 1000)
-        }, nextTime)
-    }
-
-    runSPD(0)
+    // runMeer(0)
 
 }
 
