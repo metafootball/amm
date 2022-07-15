@@ -54,7 +54,7 @@ async function main() {
     
     
     runAMM(misAmm,0)
-    // runAMM(meerAmm,1)
+    runAMM(meerAmm,1)
     runAMM(spdAmm,2)
 
     // runMeer(0)
