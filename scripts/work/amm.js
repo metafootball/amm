@@ -3,6 +3,8 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
+const { ethers, upgrades, network } = require("hardhat");
+
 const {
     Attach,
     Accounts,
@@ -24,7 +26,11 @@ async function main() {
         accounts[1].address,
         accounts[2].address
     )
-    // return
+    // console.log(
+    //     accounts[3],
+    //     // network
+    // )
+
     misAmm = await Attach.SmartAMM(address.Address.MIS_AMM)
     meerAmm = await Attach.SmartAMM(address.Address.MEER_AMM)
     spdAmm = await Attach.SmartAMM(address.Address.SPD_AMM)
@@ -55,7 +61,7 @@ async function main() {
     
     runAMM(misAmm,0)
     runAMM(meerAmm,1)
-    runAMM(spdAmm,2)
+    runAMM(spdAmm,3)
 
     // runMeer(0)
 
