@@ -1,0 +1,18 @@
+{
+    "ContractAt" : {
+        "MultiCall": "0x6E25E2E9d89d1Ba697B912599490268Ec0ec0724",
+        "Router": "0xFEDBCdc8998dd86aB6FB5935BBC4BEe689F1D5B9",
+        "WETH":"0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+        "UniFactory":"0xca143ce32fe78f1f7019d7d551a6402fc5350c73",
+        "USDT" : "0x55d398326f99059fF775485246999027B3197955",
+        "Administrator": "0xbe95C1475Be4B41b2b7E55dfA5A902087D671080",
+        "BatchAsset": "0x32d50b1192404820936B1db79e0F77a3B6190668"
+
+    },
+    "Address" : {
+        "MEER_AMM": "0xC0d99ff38830a927bD2236c6a4CD6B7FfD93b6C8",
+        "FY": "0x79B71F321D44F5a6c2208D74197CACf7364DA3d7",
+        "HFUSDT": "0xa6906DF013821e8c435bDb49bc5725F5C75e8bED",
+        "FuGouYun": "0x4C62b492f182141969325fFB73C26e18FA7C867d"
+    }
+}

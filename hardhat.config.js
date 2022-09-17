@@ -63,6 +63,32 @@ module.exports = {
       },
       chainId: 56
     },
+    bscClone: {
+      url: "https://bsc-dataseed2.defibit.io",
+      accounts: {
+        mnemonic: process.env.MNEMONIC_CLONE,
+        // count: 100
+      },
+      chainId: 56
+    },
+    MeerSell: {
+      url: "https://bsc-dataseed2.defibit.io",
+      accounts: {
+        mnemonic: process.env.MNEMONIC_SELL,
+        // count: 100
+      },
+      chainId: 56
+    },
+
+    meer: {
+      url: "https://rpc.evm.meerscan.io",
+      accounts: {
+        mnemonic: process.env.MNEMONIC_MEER
+      },
+      chainId: 813
+
+    },
+
     dev: {
       url: "http://localhost:8545",
       // accounts: [process.env.PRIVATE_KEY],
