@@ -31,7 +31,10 @@ async function main() {
 
     const e18 = BigNumber.from(DecimalHex)
 
-    const batch = await Attach.BatchAsset()
+    // const batch = await Attach.BatchAsset()
+    const batch = await Attach.BatchAsset.Deploy(accounts[0].address)
+
+    return
     const router = await Attach.Router()
 
     const Fy = await Attach.TestCoin(address.Address.FY)

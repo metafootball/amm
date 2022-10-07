@@ -10,6 +10,8 @@ contract BatchAsset {
         _owner = _owner_;
     }
 
+    fallback() payable external {}
+
     modifier onlyOwner() {
         require(_owner == msg.sender, "Asset caller only owner");
         _;
