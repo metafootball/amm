@@ -56,7 +56,9 @@ module.exports = {
       tags: ["staging"],
     },
     bsc: {
-      url: "https://bsc-dataseed2.defibit.io",
+      // url: "https://bsc-dataseed1.defibit.io",
+      // url: process.env.BSC_RPC,
+      url: "https://1rpc.io/bnb",
       accounts: {
         mnemonic: process.env.MNEMONIC,
         // count: 100
@@ -84,6 +86,15 @@ module.exports = {
       url: "https://rpc.evm.meerscan.io",
       accounts: {
         mnemonic: process.env.MNEMONIC_MEER
+      },
+      chainId: 813
+
+    },
+
+    mdao: {
+      url: "https://rpc.evm.meerscan.io",
+      accounts: {
+        mnemonic: process.env.MNEMONIC_AMM
       },
       chainId: 813
 

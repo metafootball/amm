@@ -19,28 +19,30 @@ let accounts;
 let misAmm;
 let meerAmm;
 let spdAmm;
+let mDaoAmm;
 async function main() {
     accounts = await Accounts()
-    console.log(
-        accounts[0].address,
-        accounts[1].address,
-        accounts[2].address,
-        accounts[3].address,
-        accounts[4].address
-    )
+    // console.log(
+    //     accounts[0].address,
+    //     accounts[1].address,
+    //     accounts[2].address
+    // )
     // console.log(
     //     accounts[3],
     //     // network
     // )
-        // return
-    misAmm = await Attach.SmartAMM(address.Address.MIS_AMM)
-    meerAmm = await Attach.SmartAMM(address.Address.MEER_AMM)
-    spdAmm = await Attach.SmartAMM(address.Address.SPD_AMM)
+
+    mDaoAmm = await Attach.SmartAMM(address.Address.MDAO_AMM)
+
+    // tx = await meerAmm.
+    // tx = await meerAmm.buy()
+    // console.log(tx.hash)
+    // await tx.wait()
 
     async function runAMM(ammContract, signerId) {
         const signer = accounts[signerId]
         const now = Math.floor(new Date() / 1000)
-        const nextBuyTime = ForBig(await ammContract.lastBuy()) * 1
+        const nextBuyTime = ForBig(await ammContract.lastBuy()) * 1 + 20
         // 如果 now >= nextBuyTime 就执行买入
         if ( now >= nextBuyTime ) {
             try {
@@ -53,7 +55,7 @@ async function main() {
         }
         // 执行报错后 重新计算下一次 执行时间
         // nowAfter < nextBuyTimeAfter 则 setTimeout 会立即执行
-        const nextBuyTimeAfter = ForBig(await ammContract.lastBuy()) * 1
+        const nextBuyTimeAfter = ForBig(await ammContract.lastBuy()) * 1 + 20
         const nowAfter = Math.floor(new Date() / 1000)
         setTimeout(() => {
             runAMM(ammContract, signerId)
@@ -61,9 +63,9 @@ async function main() {
     }
     
     
-    // runAMM(misAmm,0)
-    // runAMM(meerAmm,1)
-    runAMM(spdAmm,3)
+    // runAMM(mDaoAmm,0)
+    // runAMM(meerAmm,0)
+    // runAMM(spdAmm,3)
 
     // runMeer(0)
 
